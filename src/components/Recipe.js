@@ -21,7 +21,7 @@ class Recipe extends React.Component {
     return (
       <div className="container">
         { this.state.activeRecipe.length !== 0 &&
-          <div className="active-recipe">
+          <div className="active-recipe" style={{ marginBottom: "2rem", backgroundColor: "aquamarine", padding: "20px"}}>
             <img className="active-recipe__img" src={recipe.image_url} alt={recipe.title}/>
             <h3 className="active-recipe__title">{ recipe.title }</h3>
             <h4 className="active-recipe__publisher">
