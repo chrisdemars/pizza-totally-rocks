@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 const Recipes = props => (
   <div className="container">
     <div className="row">
-    { props.recipes.map((recipe) => {
+    { props.recipes && props.recipes.map((recipe) => {
       return (
         <div key={recipe.title} className="col-md-4" style={{ marginBottom:"2rem" }}>
           <div className="recipes__box">

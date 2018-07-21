@@ -13,13 +13,13 @@ class App extends Component {
   getRecipe = async (e) => {
     const recipeName = e.target.elements.recipeName.value;
     e.preventDefault();
-    const api_call = await fetch(`https://cors-anywhere.herokuapp.com/http://food2fork.com/api/search?key=${API_KEY}&q=${recipeName}&count=10`);
+    const api_call = await fetch(`http://food2fork.com/api/search?key=${API_KEY}&q=${recipeName}&count=3`);
     
     const data = await api_call.json();
     this.setState({ recipes: data.recipes });
     console.log(this.state.recipes);
   }
-  componentDidMount = () => {
+  componentWillMount = () => {
     const json = localStorage.getItem("recipes");
     const recipes = JSON.parse(json);
     this.setState({ recipes });
@@ -32,7 +32,7 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <h1 className="App-title">Recipe Search</h1>
+          <h1 className="App-title">🍕 Pizza Totally Rocks 🍕</h1>
         </header>
         <Form getRecipe={this.getRecipe} />
         <Recipes recipes={this.state.recipes} />
