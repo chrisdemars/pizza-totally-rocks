@@ -10,7 +10,7 @@ img {
 }
 
 a {
-  color: #e74c3c !important;
+  color: #8a0e01;
 }
 
 button:focus {
@@ -59,7 +59,7 @@ button:focus {
 }
 
 .recipes__title {
-  color: #e74c3c;
+  color: #8a0e01;
   text-transform: uppercase;
   font-size: 1.1rem;
   padding: 1.8rem 0 0.2rem 0;
@@ -144,7 +144,7 @@ input:-webkit-autofill {
   text-transform: lowercase;
   font-weight: 300;
   letter-spacing: 2px;
-  color: #e74c3c;
+  color: #8a0e01;
   margin-left: 10px;
 }
 
@@ -157,4 +157,8 @@ input:-webkit-autofill {
   font-size: 1rem;
   text-transform: uppercase;
   font-weight: 500;
+}
+
+button {
+  cursor: pointer;
 }
