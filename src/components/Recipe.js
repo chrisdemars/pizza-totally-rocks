@@ -8,7 +8,7 @@ class Recipe extends React.Component {
   }
   componentDidMount = async () => {
     const title = this.props.location.state.recipe;
-    const req = await fetch(`https://crossorigin.me/https://google.com/https://food2fork.com/api/search?key=${process.env.REACT_APP_API_KEY}&q=${title}`);
+    const req = await fetch(`https://api.edamam.com/search?q=chicken&app_id=${REACT_APP_API_ID}&app_key=${REACT_APP_API_KEY}`);
     
     const res = await req.json();
     this.setState({ activeRecipe: res.recipes[0] });
