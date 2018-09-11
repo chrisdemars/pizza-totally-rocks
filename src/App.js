@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
-
 import Form from "./components/Form";
 import Recipes from "./components/Recipes";
-
 class App extends Component {
   state = {
     recipes: []
@@ -11,7 +9,7 @@ class App extends Component {
   getRecipe = async (e) => {
     const recipeName = e.target.elements.recipeName.value;
     e.preventDefault();
-    const api_call = await fetch(`https://api.edamam.com/search?q=chicken&app_id=${REACT_APP_API_ID}&app_key=${REACT_APP_API_KEY}`);
+    const api_call = await fetch(`https://api.edamam.com/search?q=pizza&app_id=${process.env.REACT_APP_API_ID}&app_key=${process.env.REACT_APP_API_KEY}`);
     
     const data = await api_call.json();
     this.setState({ recipes: data.recipes });
