@@ -20,7 +20,7 @@ class App extends Component {
   }
 
   getRecipe = async () => {
-    const api_call = await fetch(`https://api.edamam.com/search?q=pizza&app_id=${process.env.REACT_APP_API_ID}&app_key=${process.env.REACT_APP_API_KEY}`);
+    const api_call = await fetch(`https://www.food2fork.com/api/search?key=${process.env.REACT_APP_API_KEY}&q=pizza`);
     const data = await api_call.json();
     this.setState({ recipes: data.hits });
   }
