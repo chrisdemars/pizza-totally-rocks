@@ -18,36 +18,31 @@ class App extends Component {
     }
     return json;
   }
+
   getRecipe = async () => {
-    // const recipeName = e.target.elements.recipeName.value;
-    // e.preventDefault();
     const api_call = await fetch(`https://api.edamam.com/search?q=pizza&app_id=${process.env.REACT_APP_API_ID}&app_key=${process.env.REACT_APP_API_KEY}`);
     const data = await api_call.json();
-<<<<<<< HEAD
     this.setState({ recipes: data.hits });
-    console.log(this.state.hits);
   }
+
   componentWillMount = () => {
     const json = localStorage.getItem("recipes");
     const hits = JSON.parse(json);
     this.setState({ hits });
   }
+
   componentDidUpdate = () => {
     const hits = JSON.stringify(this.state.hits);
     localStorage.setItem("recipes", hits);
-=======
-    this.setStorage(data.hits);
-    return data.hits;
+    this.setStorage({ hits });
+    return this.hits;
   }
+
   componentWillMount = async () => {
     let recipes = await this.getRecipe();
     this.setState({ "recipes": recipes });
->>>>>>> bb94d84473cacee47eb527394bcd67d3d09c4435
   }
-  // componentDidUpdate = () => {
-  //   const recipes = JSON.stringify(this.state.recipes);
-  //   this.setStorage(recipes);
-  // }
+
   render() {
 
     return (
