@@ -2,14 +2,17 @@ import React, { Component } from 'react';
 import './App.css';
 import Form from "./components/Form";
 import Recipes from "./components/Recipes";
+
 class App extends Component {
   state = {
     recipes: []
   }
+
   setStorage = (recipes) => {
     let data = JSON.stringify(recipes);
     localStorage.setItem("recipes", data);
   }
+  
   getStorage = () => {
     let json = localStorage.getItem("recipes");
     if (!json) {

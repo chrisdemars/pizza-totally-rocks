@@ -17,7 +17,7 @@ const Recipes = props => (
                 <h5 className="recipes__title">
                   { recipe.label }
                   {
-                    // recipe.label && recipe.label.length < 20 ? `${recipe.label}` : `${recipe.label.substring(0, 25)}...`
+                    recipe.label && recipe.label.length < 20 ? `${recipe.label}` : `${recipe.label.substring(0, 25)}...`
                   }
                 </h5>
                 <p className="recipes__subtitle">Publisher: <span>

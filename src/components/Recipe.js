@@ -5,14 +5,15 @@ class Recipe extends React.Component {
   state = {
     activeRecipe: []
   }
+
   componentDidMount = async () => {
-    // const title = this.props.location.state.recipe;
     const req = await fetch(`https://api.edamam.com/search?q=pizza&app_id=${process.env.REACT_APP_API_ID}&app_key=${process.env.REACT_APP_API_KEY}`);
 
     const res = await req.json();
     this.setState({ activeRecipe: res.hits[0] });
     console.log(this.state.activeRecipe);
   }
+  
   render() {
     const recipe = this.state.activeRecipe;
     return (  
