@@ -2,35 +2,30 @@ import React, { Component } from "react";
 import "./App.css";
 import Form from "./components/Form";
 import Recipes from "./components/Recipes";
+import { getStorage, setStorage } from "./helpers/localStorage";
 
 class App extends Component {
   state = {
     recipes: []
   };
 
-  setStorage = (name, item) => {
-    let data = JSON.stringify(item);
-    localStorage.setItem(name, data);
-  };
-
-  getStorage = (name) => {
-    let json = localStorage.getItem(name);
-    if (!json) {
-      json = [];
-      this.setStorage(name, json);
+  getRecipes = async () => {
+    if (getStorage("recipes")) {
+      this.setState({ recipes: getStorage("recipes") });
+    } else {
+      const api_call = await fetch(
+        `https://api.edamam.com/search?q=pizza&app_id=${
+          process.env.REACT_APP_API_ID
+        }&app_key=${process.env.REACT_APP_API_KEY}`
+      );
+      const data = await api_call.json();
+      this.setState({ recipes: data.hits });
+      setStorage("recipes", data.hits);
     }
-    return json;
-  };
-
-  getRecipe = async () => {
-    const api_call = await fetch(`https://api.edamam.com/search?q=pizza&app_id=${process.env.REACT_APP_API_ID}&app_key=${process.env.REACT_APP_API_KEY}`);
-    const data = await api_call.json();
-    this.setState({ recipes: data.hits });
-    this.setStorage("recipes", data.hits);
   };
 
   componentDidMount() {
-    this.getRecipe();
+    this.getRecipes();
   }
 
   render() {
@@ -47,7 +42,7 @@ class App extends Component {
             </span>
           </h1>
         </header>
-        <Form getRecipe={this.getRecipe} />
+        <Form getRecipe={this.getRecipes} />
         <Recipes recipes={this.state.recipes} />
       </div>
     );
