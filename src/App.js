@@ -2,49 +2,37 @@ import React, { Component } from "react";
 import "./App.css";
 import Form from "./components/Form";
 import Recipes from "./components/Recipes";
+import { getStorage, setStorage } from "./helpers/localStorage";
 
 class App extends Component {
   state = {
-    recipes: []
+    recipes: [],
+    from: 0,
+    to: 20
   };
 
-  setStorage = (recipes) => {
-    let data = JSON.stringify(recipes);
-    localStorage.setItem("recipes", data);
-  };
+  getRecipes = async () => {
+    const query = this.props.location.search.split("=")[1];
 
-  getStorage = () => {
-    let json = localStorage.getItem("recipes");
-    if (!json) {
-      json = [];
-      this.setStorage(json);
+    if (query || !getStorage("recipes")) {
+      const api_call = await fetch(
+        `https://api.edamam.com/search?q=pizza${
+          query ? "+" + escape(query) : ""
+        }&from=${this.state.from}&to=${this.state.to}&app_id=${
+          process.env.REACT_APP_API_ID
+        }&app_key=${process.env.REACT_APP_API_KEY}`
+      );
+      const data = await api_call.json();
+      this.setState({ recipes: data.hits });
+      setStorage(query || "recipes", data.hits);
+    } else {
+      this.setState({ recipes: getStorage("recipes") });
     }
-    return json;
   };
 
-  getRecipe = async () => {
-    const api_call = await fetch(`https://api.edamam.com/search?q=pizza&app_id=${process.env.REACT_APP_API_ID}&app_key=${process.env.REACT_APP_API_KEY}`);
-    const data = await api_call.json();
-    this.setState({ recipes: data.hits });
-  };
-
-  componentWillMount = () => {
-    const json = localStorage.getItem("recipes");
-    const hits = JSON.parse(json);
-    this.setState({ hits });
-  };
-
-  componentDidUpdate = () => {
-    const hits = JSON.stringify(this.state.hits);
-    localStorage.setItem("recipes", hits);
-    this.setStorage({ hits });
-    return this.hits;
-  };
-
-  componentWillMount = async () => {
-    let recipes = await this.getRecipe();
-    this.setState({ recipes: recipes });
-  };
+  componentDidMount() {
+    this.getRecipes();
+  }
 
   render() {
     return (
@@ -60,8 +48,8 @@ class App extends Component {
             </span>
           </h1>
         </header>
-        <Form getRecipe={this.getRecipe} />
-        <Recipes recipes={this.state.hits} />
+        <Form getRecipe={this.getRecipes} />
+        <Recipes recipes={this.state.recipes} />
       </div>
     );
   }
