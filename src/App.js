@@ -6,21 +6,27 @@ import { getStorage, setStorage } from "./helpers/localStorage";
 
 class App extends Component {
   state = {
-    recipes: []
+    recipes: [],
+    from: 0,
+    to: 20
   };
 
   getRecipes = async () => {
-    if (getStorage("recipes")) {
-      this.setState({ recipes: getStorage("recipes") });
-    } else {
+    const query = this.props.location.search.split("=")[1];
+
+    if (query || !getStorage("recipes")) {
       const api_call = await fetch(
-        `https://api.edamam.com/search?q=pizza&app_id=${
+        `https://api.edamam.com/search?q=pizza${
+          query ? "+" + escape(query) : ""
+        }&from=${this.state.from}&to=${this.state.to}&app_id=${
           process.env.REACT_APP_API_ID
         }&app_key=${process.env.REACT_APP_API_KEY}`
       );
       const data = await api_call.json();
       this.setState({ recipes: data.hits });
-      setStorage("recipes", data.hits);
+      setStorage(query || "recipes", data.hits);
+    } else {
+      this.setState({ recipes: getStorage("recipes") });
     }
   };
 

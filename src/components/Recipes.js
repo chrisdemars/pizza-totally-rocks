@@ -8,7 +8,7 @@ const Recipes = (props) => {
         {props.recipes.map(({ recipe }) => {
           return (
             <div
-              key={recipe.label}
+              key={recipe.uri.split("#")[1]}
               className="col-md-4"
               style={{ marginBottom: "2rem" }}
             >

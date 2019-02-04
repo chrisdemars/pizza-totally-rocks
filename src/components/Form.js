@@ -2,7 +2,7 @@ import React from "react";
 
 const Form = (props) => (
   <form
-    onSubmit={props.getRecipes}
+    onSubmit={(e) => props.getRecipes(e)}
     style={{
       marginBottom: "2rem",
       backgroundColor: "aquamarine",

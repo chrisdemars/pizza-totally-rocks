@@ -9,11 +9,13 @@ export const getStorage = (name) => {
     json = "";
   }
 
-  if (json) {
-    console.log(JSON.parse(json));
-  }
-
-  console.log("json length", json.length);
-
   return json ? JSON.parse(json) : null;
+};
+
+export const clearStorage = (item) => {
+  if (item) {
+    localStorage.removeItem(item);
+  } else {
+    localStorage.clear();
+  }
 };
